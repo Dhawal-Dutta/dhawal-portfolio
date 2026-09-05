@@ -198,7 +198,7 @@
                 projectGrid.innerHTML = projects.map(project => `
                     <figure class="project-card">
                         <a href="project.html?project=${encodeURIComponent(project.slug)}">
-                            <img src="${project.cover}" alt="Thumbnail for ${project.title}">
+                            <img src="${project.cover}" alt="Thumbnail for ${project.title}" loading="lazy" decoding="async">
                             <figcaption>${project.title}</figcaption>
                         </a>
                     </figure>

@@ -31,6 +31,7 @@ def project_data(slug, request_path=""):
     gallery = [
         {"src": f"/projects/{slug}/{path.name}"}
         for path in images
+        if path != cover
     ]
     if not gallery:
         gallery = [
@@ -88,6 +89,10 @@ def youtube_id(value):
 
 
 class PortfolioHandler(SimpleHTTPRequestHandler):
+    def end_headers(self):
+        self.send_header("Cache-Control", "public, max-age=86400")
+        super().end_headers()
+
     def do_GET(self):
         parsed = urlparse(self.path)
         path = unquote(parsed.path)

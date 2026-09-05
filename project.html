@@ -139,7 +139,7 @@
                 title.textContent = project.title;
                 projectImages = project.images;
                 gallery.innerHTML = project.images.map(image => `
-                    <figure><img src="${image.src}" data-index="${projectImages.indexOf(image)}" alt="Photograph from ${project.title}"></figure>
+                    <figure><img src="${image.src}" data-index="${projectImages.indexOf(image)}" alt="Photograph from ${project.title}" loading="lazy" decoding="async"></figure>
                 `).join('');
             })
             .catch(() => {

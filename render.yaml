@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: dhawal-portfolio
+    runtime: python
+    buildCommand: ""
+    startCommand: "python3 server.py"
+    healthCheckPath: /index.html

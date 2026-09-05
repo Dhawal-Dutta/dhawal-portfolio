@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photo Project | Dhawal Dutta</title>
+    <style>
+        :root { --paper: #f2f2f4; --ink: #111; --line: #c9c9cc; }
+        * { box-sizing: border-box; }
+        body { background: var(--paper); color: var(--ink); font-family: Garamond, serif; margin: 0; }
+        header { align-items: center; display: flex; justify-content: space-between; margin: 3rem auto 0; max-width: 1120px; padding: 0 2rem; }
+        h1, h2, p { margin: 0; }
+        h1 { font-size: 32px; font-weight: normal; letter-spacing: 0.5px; }
+        h1 a { color: inherit; font-size: inherit; text-decoration: none; }
+        a { color: var(--ink); font-size: 18px; text-decoration: none; transition: opacity 0.2s ease; }
+        a:hover { opacity: 0.5; }
+        main { margin: 5rem auto 0; max-width: 1120px; padding: 0 2rem 5rem; }
+        .project-heading { align-items: baseline; border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; padding-bottom: 1rem; }
+        h2, .project-heading p, figcaption, .loading-message { font-size: 18px; }
+        h2 { font-weight: normal; }
+        .gallery { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2rem; margin-top: 3rem; }
+        figure { margin: 0; }
+        figure img { display: block; height: auto; width: 100%; }
+        .gallery img { cursor: zoom-in; }
+        figcaption { line-height: 1.35; padding-top: 1rem; }
+        .back-link { display: inline-block; margin-top: 4rem; }
+        dialog {
+            background: rgba(17, 17, 17, 0.96);
+            border: 0;
+            color: #fff;
+            height: 100vh;
+            max-height: none;
+            max-width: none;
+            padding: 3rem 5rem;
+            width: 100vw;
+        }
+        dialog::backdrop { background: rgba(17, 17, 17, 0.9); }
+        .lightbox-figure {
+            align-items: center;
+            display: flex;
+            height: 100%;
+            justify-content: center;
+            margin: 0;
+        }
+        .lightbox-figure img {
+            max-height: calc(100vh - 7rem);
+            max-width: 100%;
+            object-fit: contain;
+        }
+        .lightbox-button {
+            background: transparent;
+            border: 0;
+            color: #fff;
+            cursor: pointer;
+            font: inherit;
+            font-size: 32px;
+            line-height: 1;
+            padding: 0.5rem;
+            position: absolute;
+        }
+        .lightbox-button:hover { opacity: 0.6; }
+        .lightbox-close { right: 1.5rem; top: 1rem; }
+        .lightbox-previous { left: 1.5rem; top: 50%; }
+        .lightbox-next { right: 1.5rem; top: 50%; }
+        .lightbox-count {
+            bottom: 1.25rem;
+            font-size: 18px;
+            left: 50%;
+            position: absolute;
+            transform: translateX(-50%);
+        }
+        @media (max-width: 700px) {
+            header { margin-top: 2rem; padding: 0 1.25rem; }
+            main { margin-top: 3.5rem; padding: 0 1.25rem 3rem; }
+            .project-heading { align-items: flex-start; flex-direction: column; gap: 0.5rem; }
+            .gallery { grid-template-columns: 1fr; gap: 2rem; margin-top: 2rem; }
+            dialog { padding: 3rem 2.5rem; }
+            .lightbox-previous { left: 0.5rem; }
+            .lightbox-next { right: 0.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <header><h1><a href="index.html">Dhawal Dutta</a></h1><a href="index.html">home</a></header>
+    <main>
+        <div class="project-heading"><h2 id="project-title">Loading...</h2><p>Photo project</p></div>
+        <section class="gallery" id="gallery" aria-label="Photo gallery">
+            <p class="loading-message">Loading gallery...</p>
+        </section>
+        <a class="back-link" href="photo-work.html">back to photo work</a>
+    </main>
+    <dialog id="lightbox" aria-label="Photo carousel">
+        <button class="lightbox-button lightbox-close" id="lightbox-close" type="button" aria-label="Close gallery">&times;</button>
+        <button class="lightbox-button lightbox-previous" id="lightbox-previous" type="button" aria-label="Previous photo">&#8592;</button>
+        <figure class="lightbox-figure">
+            <img id="lightbox-image" alt="">
+        </figure>
+        <button class="lightbox-button lightbox-next" id="lightbox-next" type="button" aria-label="Next photo">&#8594;</button>
+        <p class="lightbox-count" id="lightbox-count"></p>
+    </dialog>
+    <script>
+        const slug = new URLSearchParams(window.location.search).get('project');
+        const title = document.querySelector('#project-title');
+        const gallery = document.querySelector('#gallery');
+        const lightbox = document.querySelector('#lightbox');
+        const lightboxImage = document.querySelector('#lightbox-image');
+        const lightboxCount = document.querySelector('#lightbox-count');
+        let projectImages = [];
+        let currentImage = 0;
+
+        function showImage(index) {
+            currentImage = (index + projectImages.length) % projectImages.length;
+            lightboxImage.src = projectImages[currentImage].src;
+            lightboxImage.alt = `Photograph ${currentImage + 1}`;
+            lightboxCount.textContent = `${currentImage + 1} / ${projectImages.length}`;
+        }
+
+        gallery.addEventListener('click', event => {
+            const image = event.target.closest('img[data-index]');
+            if (!image) return;
+            showImage(Number(image.dataset.index));
+            lightbox.showModal();
+        });
+
+        document.querySelector('#lightbox-close').addEventListener('click', () => lightbox.close());
+        document.querySelector('#lightbox-previous').addEventListener('click', () => showImage(currentImage - 1));
+        document.querySelector('#lightbox-next').addEventListener('click', () => showImage(currentImage + 1));
+
+        document.addEventListener('keydown', event => {
+            if (!lightbox.open) return;
+            if (event.key === 'ArrowLeft') showImage(currentImage - 1);
+            if (event.key === 'ArrowRight') showImage(currentImage + 1);
+        });
+
+        fetch(`/api/projects/${encodeURIComponent(slug || '')}`)
+            .then(response => response.json())
+            .then(project => {
+                document.title = `${project.title} | Dhawal Dutta`;
+                title.textContent = project.title;
+                projectImages = project.images;
+                gallery.innerHTML = project.images.map(image => `
+                    <figure><img src="${image.src}" data-index="${projectImages.indexOf(image)}" alt="Photograph from ${project.title}"></figure>
+                `).join('');
+            })
+            .catch(() => {
+                title.textContent = 'Project not found';
+                gallery.innerHTML = '<p class="loading-message">This project could not be loaded.</p>';
+            });
+    </script>
+</body>
+</html>

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact | Dhawal Dutta</title>
+    <style>
+        :root {
+            --paper: #f2f2f4;
+            --ink: #111;
+            --line: #c9c9cc;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--paper);
+            color: var(--ink);
+            font-family: Garamond, serif;
+            margin: 0;
+            min-height: 100vh;
+        }
+
+        header {
+            align-items: center;
+            display: flex;
+            justify-content: space-between;
+            margin: 3rem auto 0;
+            max-width: 1120px;
+            padding: 0 2rem;
+        }
+
+        h1,
+        h2,
+        p {
+            margin: 0;
+        }
+
+        h1 {
+            font-size: 32px;
+            font-weight: normal;
+            letter-spacing: 0.5px;
+        }
+
+        h1 a,
+        header > a,
+        nav a,
+        .contact-link {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        h1 a {
+            font-size: inherit;
+        }
+
+        header > a,
+        nav a,
+        .contact-link {
+            font-size: 18px;
+            transition: opacity 0.2s ease;
+        }
+
+        h1 a:hover,
+        header > a:hover,
+        nav a:hover,
+        .contact-link:hover {
+            opacity: 0.5;
+        }
+
+        main {
+            margin: 5rem auto 0;
+            max-width: 1120px;
+            padding: 0 2rem 5rem;
+        }
+
+        .page-heading {
+            align-items: baseline;
+            border-bottom: 1px solid var(--line);
+            display: flex;
+            justify-content: space-between;
+            padding-bottom: 1rem;
+        }
+
+        .page-heading h2,
+        .page-heading p,
+        .contact-list {
+            font-size: 18px;
+        }
+
+        .page-heading h2 {
+            font-weight: normal;
+        }
+
+        .contact-list {
+            display: grid;
+            gap: 1.5rem;
+            margin-top: 3rem;
+            max-width: 32rem;
+        }
+
+        .contact-item {
+            border-top: 1px solid var(--line);
+            padding-top: 1rem;
+        }
+
+        .contact-label {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-top: 5rem;
+        }
+
+        @media (max-width: 700px) {
+            header {
+                margin-top: 2rem;
+                padding: 0 1.25rem;
+            }
+
+            main {
+                margin-top: 3.5rem;
+                padding: 0 1.25rem 3rem;
+            }
+
+            .page-heading {
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .contact-list {
+                margin-top: 2rem;
+            }
+
+            nav {
+                gap: 1.25rem;
+                margin-top: 3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1><a href="index.html">Dhawal Dutta</a></h1>
+        <a href="index.html">home</a>
+    </header>
+
+    <main>
+        <div class="page-heading">
+            <h2>Contact</h2>
+            <p>Get in touch</p>
+        </div>
+
+        <section class="contact-list" aria-label="Contact details">
+            <div class="contact-item">
+                <span class="contact-label">Email</span>
+                <a class="contact-link" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=dhawaldutta22@gmail.com" target="_blank" rel="noreferrer">dhawaldutta22@gmail.com</a>
+            </div>
+            <div class="contact-item">
+                <span class="contact-label">Instagram</span>
+                <a class="contact-link" href="https://www.instagram.com/dhawaldutta/" target="_blank" rel="noreferrer">@dhawaldutta</a>
+            </div>
+            <div class="contact-item">
+                <span class="contact-label">Behance</span>
+                <a class="contact-link" href="https://www.behance.net/dhawaldutta" target="_blank" rel="noreferrer">behance.net/dhawaldutta</a>
+            </div>
+        </section>
+
+        <nav aria-label="Portfolio sections">
+            <a href="photo-work.html">photo work</a>
+            <a href="video-work.html">video work</a>
+            <a href="about.html">about</a>
+            <a href="papers.html">papers and publications</a>
+        </nav>
+    </main>
+</body>
+</html>

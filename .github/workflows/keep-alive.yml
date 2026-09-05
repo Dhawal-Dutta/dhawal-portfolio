@@ -1,0 +1,13 @@
+name: Keep Render service awake
+
+on:
+  schedule:
+    - cron: "*/14 * * * *"
+  workflow_dispatch:
+
+jobs:
+  ping-site:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Request the portfolio homepage
+        run: curl --fail --silent --show-error --max-time 30 https://dhawal-portfolio.onrender.com/index.html

@@ -90,7 +90,11 @@ def youtube_id(value):
 
 class PortfolioHandler(SimpleHTTPRequestHandler):
     def end_headers(self):
-        self.send_header("Cache-Control", "public, max-age=86400")
+        path = urlparse(self.path).path
+        if path.startswith("/api/") or path.endswith(".html") or "." not in path.rsplit("/", 1)[-1]:
+            self.send_header("Cache-Control", "no-cache, must-revalidate")
+        else:
+            self.send_header("Cache-Control", "public, max-age=86400")
         super().end_headers()
 
     def do_GET(self):
